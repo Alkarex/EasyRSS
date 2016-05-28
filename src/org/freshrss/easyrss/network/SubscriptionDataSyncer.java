@@ -89,6 +89,12 @@ public class SubscriptionDataSyncer extends AbsDataSyncer {
 
     @Override
     public void startSyncing() throws DataSyncerException {
+    
+        final Context context = dataMgr.getContext();
+        if (!NetworkUtils.checkSyncingNetworkStatus(context, networkConfig)) {
+            return;
+        }
+        
         final String sExpTime = dataMgr.getSettingByName(Setting.SETTING_SUBSCRIPTION_LIST_EXPIRE_TIME);
         if (networkConfig != SettingSyncMethod.SYNC_METHOD_MANUAL
                 && sExpTime != null
@@ -105,9 +111,6 @@ public class SubscriptionDataSyncer extends AbsDataSyncer {
 
     private void syncSubscriptionIcons() throws DataSyncerException {
         final Context context = dataMgr.getContext();
-        if (!NetworkUtils.checkSyncingNetworkStatus(context, networkConfig)) {
-            return;
-        }
         final ContentResolver resolver = context.getContentResolver();
         final Cursor cur = resolver.query(Subscription.CONTENT_URI, new String[] { Subscription._UID,
                 Subscription._ICON, Subscription._URL }, null, null, null);
@@ -137,9 +140,6 @@ public class SubscriptionDataSyncer extends AbsDataSyncer {
 
     private void syncSubscriptions() throws DataSyncerException {
         final Context context = dataMgr.getContext();
-        if (!NetworkUtils.checkSyncingNetworkStatus(context, networkConfig)) {
-            return;
-        }
         notifyProgressChanged(context.getString(R.string.TxtSyncingSubscriptions), -1, -1);
 
         final InputStream stream = httpGetQueryStream(new SubscriptionListURL(isHttpsConnection));

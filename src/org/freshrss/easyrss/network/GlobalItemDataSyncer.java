@@ -126,8 +126,14 @@ public class GlobalItemDataSyncer extends AbsDataSyncer implements DataSyncerLis
 
     @Override
     protected void startSyncing() throws DataSyncerException {
+
+        final Context context = dataMgr.getContext();
+        if (!NetworkUtils.checkSyncingNetworkStatus(context, networkConfig)) {
+            return;
+        }
+
         final String sExpTime = dataMgr.getSettingByName(Setting.SETTING_ITEM_LIST_EXPIRE_TIME);
-        if (networkConfig != SettingSyncMethod.SYNC_METHOD_MANUAL
+    	if (networkConfig != SettingSyncMethod.SYNC_METHOD_MANUAL
                 && sExpTime != null
                 && Long.valueOf(sExpTime) + new SettingSyncInterval(dataMgr).toSeconds() * 1000 - 10 * 60 * 1000 > System
                         .currentTimeMillis()) {
@@ -154,9 +160,6 @@ public class GlobalItemDataSyncer extends AbsDataSyncer implements DataSyncerLis
 
     private void syncAllItems() throws DataSyncerException {
         final Context context = dataMgr.getContext();
-        if (!NetworkUtils.checkSyncingNetworkStatus(context, networkConfig)) {
-            return;
-        }
         int count = 0;
         String sSetting = dataMgr.getSettingByName(Setting.SETTING_GLOBAL_NEWEST_ITEM_TIMESTAMP);
         long newestTimestamp = (sSetting == null) ? 0 : Long.valueOf(sSetting);
@@ -228,9 +231,6 @@ public class GlobalItemDataSyncer extends AbsDataSyncer implements DataSyncerLis
 
     private void syncUnreadItems() throws DataSyncerException {
         final Context context = dataMgr.getContext();
-        if (!NetworkUtils.checkSyncingNetworkStatus(context, networkConfig)) {
-            return;
-        }
         String sSetting = dataMgr.getSettingByName(Setting.SETTING_GLOBAL_ITEM_UNREAD_COUNT);
         final int unreadCount = (sSetting == null) ? 0 : Integer.valueOf(sSetting);
         if (unreadCount == 0) {
