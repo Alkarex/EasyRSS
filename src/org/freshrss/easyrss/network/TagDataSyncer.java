@@ -83,6 +83,12 @@ public class TagDataSyncer extends AbsDataSyncer {
 
     @Override
     public void startSyncing() throws DataSyncerException {
+        
+        final Context context = dataMgr.getContext();
+        if (!NetworkUtils.checkSyncingNetworkStatus(context, networkConfig)) {
+            return;
+        }
+        
         final String sExpTime = dataMgr.getSettingByName(Setting.SETTING_TAG_LIST_EXPIRE_TIME);
         if (networkConfig != SettingSyncMethod.SYNC_METHOD_MANUAL
                 && sExpTime != null
@@ -98,9 +104,6 @@ public class TagDataSyncer extends AbsDataSyncer {
 
     private void syncTags() throws DataSyncerException {
         final Context context = dataMgr.getContext();
-        if (!NetworkUtils.checkSyncingNetworkStatus(context, networkConfig)) {
-            return;
-        }
         notifyProgressChanged(context.getString(R.string.TxtSyncingTags), -1, -1);
 
         final InputStream stream = httpGetQueryStream(new TagListURL(isHttpsConnection));

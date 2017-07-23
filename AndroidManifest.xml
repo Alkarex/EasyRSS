@@ -41,11 +41,6 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
-        <receiver android:name="org.freshrss.easyrss.SyncingReceiver" >
-            <intent-filter>
-                <action android:name="android.net.ConnectivityManager.CONNECTIVITY_ACTION" />
-            </intent-filter>
-        </receiver>
 
         <provider
             android:name="org.freshrss.easyrss.data.DataProvider"

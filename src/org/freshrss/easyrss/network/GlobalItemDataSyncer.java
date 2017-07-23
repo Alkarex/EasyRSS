@@ -14,6 +14,8 @@ package org.freshrss.easyrss.network;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -124,8 +126,14 @@ public class GlobalItemDataSyncer extends AbsDataSyncer implements DataSyncerLis
 
     @Override
     protected void startSyncing() throws DataSyncerException {
+
+        final Context context = dataMgr.getContext();
+        if (!NetworkUtils.checkSyncingNetworkStatus(context, networkConfig)) {
+            return;
+        }
+
         final String sExpTime = dataMgr.getSettingByName(Setting.SETTING_ITEM_LIST_EXPIRE_TIME);
-        if (networkConfig != SettingSyncMethod.SYNC_METHOD_MANUAL
+    	if (networkConfig != SettingSyncMethod.SYNC_METHOD_MANUAL
                 && sExpTime != null
                 && Long.valueOf(sExpTime) + new SettingSyncInterval(dataMgr).toSeconds() * 1000 - 10 * 60 * 1000 > System
                         .currentTimeMillis()) {
@@ -152,9 +160,6 @@ public class GlobalItemDataSyncer extends AbsDataSyncer implements DataSyncerLis
 
     private void syncAllItems() throws DataSyncerException {
         final Context context = dataMgr.getContext();
-        if (!NetworkUtils.checkSyncingNetworkStatus(context, networkConfig)) {
-            return;
-        }
         int count = 0;
         String sSetting = dataMgr.getSettingByName(Setting.SETTING_GLOBAL_NEWEST_ITEM_TIMESTAMP);
         long newestTimestamp = (sSetting == null) ? 0 : Long.valueOf(sSetting);
@@ -226,9 +231,6 @@ public class GlobalItemDataSyncer extends AbsDataSyncer implements DataSyncerLis
 
     private void syncUnreadItems() throws DataSyncerException {
         final Context context = dataMgr.getContext();
-        if (!NetworkUtils.checkSyncingNetworkStatus(context, networkConfig)) {
-            return;
-        }
         String sSetting = dataMgr.getSettingByName(Setting.SETTING_GLOBAL_ITEM_UNREAD_COUNT);
         final int unreadCount = (sSetting == null) ? 0 : Integer.valueOf(sSetting);
         if (unreadCount == 0) {
@@ -250,6 +252,16 @@ public class GlobalItemDataSyncer extends AbsDataSyncer implements DataSyncerLis
                     itemIds.add(itemId);
                 }
             });
+            
+            // Sort ItemIds by timestamp (Downward). That prevents mark all
+            // items as read if they are disordered.
+            Collections.sort(itemIds, new Comparator<ItemId>() {
+            	@Override
+            	public int compare(ItemId lhs, ItemId rhs) {
+            		return Long.valueOf(lhs.getTimestamp()).compareTo(rhs.getTimestamp());
+            	}
+			});
+            
             for (int i = 0; i < itemIds.size(); i += 50) {
                 if (i + 50 <= itemIds.size()) {
                     dataMgr.markItemsAsReadItemIds(itemIds, i, i + 50);
