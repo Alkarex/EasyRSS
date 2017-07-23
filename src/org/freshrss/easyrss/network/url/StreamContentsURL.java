@@ -11,8 +11,6 @@
 
 package org.freshrss.easyrss.network.url;
 
-import android.net.Uri;
-
 /*
  * Reference: http://code.google.com/p/google-reader-api/wiki/ApiStreamContents
  */
@@ -34,7 +32,7 @@ public class StreamContentsURL extends AbsURL {
 
     @Override
     public String getBaseURL() {
-        return appendURL(serverUrl + URL_STREAM_CONTENTS, Uri.encode(uid, "/"));
+        return appendURL(serverUrl, URL_STREAM_CONTENTS);
     }
 
     public String getContinuation() {
@@ -96,6 +94,7 @@ public class StreamContentsURL extends AbsURL {
 
     public void setUid(final String uid) {
         this.uid = uid;
+        addParam("s", uid);
     }
 
     public void setUnread(final boolean isUnread) {

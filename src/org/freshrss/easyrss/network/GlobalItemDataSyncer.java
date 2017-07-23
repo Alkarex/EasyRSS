@@ -14,6 +14,8 @@ package org.freshrss.easyrss.network;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -250,6 +252,16 @@ public class GlobalItemDataSyncer extends AbsDataSyncer implements DataSyncerLis
                     itemIds.add(itemId);
                 }
             });
+            
+            // Sort ItemIds by timestamp (Downward). That prevents mark all
+            // items as read if they are disordered.
+            Collections.sort(itemIds, new Comparator<ItemId>() {
+            	@Override
+            	public int compare(ItemId lhs, ItemId rhs) {
+            		return Long.valueOf(lhs.getTimestamp()).compareTo(rhs.getTimestamp());
+            	}
+			});
+            
             for (int i = 0; i < itemIds.size(); i += 50) {
                 if (i + 50 <= itemIds.size()) {
                     dataMgr.markItemsAsReadItemIds(itemIds, i, i + 50);
