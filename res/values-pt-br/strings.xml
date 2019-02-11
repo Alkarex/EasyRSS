@@ -45,11 +45,11 @@
     <string name="TxtLogout">Desconectar</string>
     <string name="TxtSettingAutoSync">Sincronização automática</string>
     <string name="TxtSettingAutoSyncIntro">Quando a SINCRONIZAÇÃO AUTOMÁTICA está ligada, o EasyRSS fará o download dos itens mais recentes do Google Reader automaticamente, sincronizando o status com os novos itens.</string>
-    <string name="TxtSettingImageFetching">Image fetching</string>
-    <string name="TxtSettingImageFetchingIntro">Choose on which network condition EasyRSS will download the images in items automatically.</string>
-    <string name="TxtSettingImagePrefetching">Image prefetching</string>
-    <string name="TxtSettingImagePrefetchingIntro">Whether to download the images in items when syncing (when IMAGE FETCHING is turned on).</string>
-    <string name="TxtSettingMaxNoOfItems">Maximum number of items in SD card</string>
+    <string name="TxtSettingImageFetching">Busca de imagem</string>
+    <string name="TxtSettingImageFetchingIntro">Escolha sob quais condições de rede o EasyRSS fará o download automático das imagens dos itens.</string>
+    <string name="TxtSettingImagePrefetching">Pré busca de imagens</string>
+    <string name="TxtSettingImagePrefetchingIntro">Desejar fazer o download das imagens dos itens enquanto sincroniza (quando a BUSCA DE IMAGEM está ligada).</string>
+    <string name="TxtSettingMaxNoOfItems">Número máximo de itens no cartão SD</string>
     <string name="TxtSettingMaxNoOfItemsIntro">To provide better reading experience when network is unavailable, every item (and images in it) will be downloaded to SD card. It may occupy large amount of SD card space.</string>
     <string name="TxtSettingSpaceCalculation">Calculate the space occupation of EasyRSS</string>
     <string name="TxtSettingFontSize">Font size</string>
