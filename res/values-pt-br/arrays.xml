@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-<<<<<<< HEAD
 
     <string-array name="SettingItemSync">
         <item>Sincronizar automaticamente via Wi-Fi</item>
@@ -11,7 +10,7 @@
         <item>Carregar imagem via Wi-Fi</item>
         <item>Carregar imagem quando os dados móveis estiverem disponíveis</item>
         <item>Desabilitar o carregamento de imagem</item>
-=======
+
     <string-array name="SettingItemSync">
         <item>Sincronizar automaticamente via Wi-Fi</item>
         <item>Sincronizar automaticamente quando serviço de dados estiver disponível</item>
@@ -21,7 +20,6 @@
         <item>Carregar imagem pelo Wi-Fi</item>
         <item>Carregar imagem quando o serviço de dados estiver disponível</item>
         <item>Desativar carregamento de imagens</item>
->>>>>>> 1cbed6887a8a7b7ebefeb73cdb6086d150ac7db7
     </string-array>
     <string-array name="SettingMaxItems">
         <item>500</item>
@@ -31,11 +29,8 @@
     </string-array>
     <string-array name="SettingTheme">
         <item>Tema padrão</item>
-<<<<<<< HEAD
         <item>Tema escuro</item>
-=======
         <item>Tema Dark</item>
->>>>>>> 1cbed6887a8a7b7ebefeb73cdb6086d150ac7db7
     </string-array>
     <string-array name="SettingFontSize">
         <item>13</item>
@@ -58,9 +53,5 @@
         <item>20 minutos</item>
         <item>30 minutos</item>
     </string-array>
-<<<<<<< HEAD
 
 </resources>
-=======
-</resources>
->>>>>>> 1cbed6887a8a7b7ebefeb73cdb6086d150ac7db7
