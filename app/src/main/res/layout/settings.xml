@@ -524,7 +524,7 @@
                     </LinearLayout>
 
                     <ImageView
-                        android:id="@+id/SettingSyncStatus"
+                        android:id="@+id/SettingSyncStatus2"
                         android:layout_width="80dip"
                         android:layout_height="wrap_content"
                         android:src="@drawable/setting_browser_choice" >
